@@ -1,26 +1,45 @@
 import React from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
 import './App.css';
+import Nav from './components/Nav/Nav';
+import SearchBar from './components/SearchBar/SearchBar';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      video: [],
+
+    };
+
+    Object.getOwnPropertyNames(App.prototype).forEach(key => this[key] = this[key.bind(this)]);
+   }
+
+
+
+  async YoutubeData(query) {
+
+    const params = {
+      key: 'AIzaSyBVkcJm7e-M4B3kiiWeG-pepm78MGRiXXA',
+      q: query,
+      part: 'snippet',
+    }
+
+    const { data } = await axios.get('https://www.googleapis.com/youtube/v3/search', { params });
+    this.setState({
+      video: [...this.state, ...data.items]
+    }, console.log(data.items));
+  }
+
+  render () {
+    return (
+      <div>
+        <Nav>
+          <SearchBar />
+        </Nav>
+      </div>
+    );
+  }
 }
 
 export default App;
