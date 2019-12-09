@@ -12,7 +12,7 @@ class App extends React.Component {
 
     };
 
-    Object.getOwnPropertyNames(App.prototype).forEach(key => this[key] = this[key.bind(this)]);
+    Object.getOwnPropertyNames(App.prototype).forEach(key => this[key] = this[key].bind(this));
    }
 
 

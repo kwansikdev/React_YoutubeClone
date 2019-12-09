@@ -1,8 +1,13 @@
 import React from 'react';
-
-const Nav = () => {
+import youtubeLogo from './images/youtubeLogo.png'
+const Nav = props => {
   return (
-
+    <div>
+      <h1>
+        <img src={youtubeLogo} alt='youtube logo'/>
+      </h1>
+        {props.children}
+    </div>
   )
 }
 
