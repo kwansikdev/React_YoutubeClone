@@ -11,36 +11,46 @@ class App extends React.Component {
       video: [],
       query: '',
     };
-
+    this.defaultState = this.state;
     Object.getOwnPropertyNames(App.prototype).forEach(key => this[key] = this[key].bind(this));
    }
 
 
 
-  async YoutubeData() {
+  async YoutubeData(query) {
+    if(!query) return;
+    if(this.state.query !== query) {
+      this.setState(this.defaultState);
+    }
     const params = {
       key: '',
-      q: '여행',
+      q: query,
       part: 'snippet',
       maxResults: 10,
     }
 
     const { data } = await axios.get('https://www.googleapis.com/youtube/v3/search', { params });
     this.setState({
-      video: [this.state.video, ...data.items],
-      query: '여행'
-    }, console.log(this.state, data.items));
+      video: [...this.state.video, ...data.items],
+      query
+    }, () => {console.log(this.defaultState, this.state)});
+
   }
 
-  componentDidMount() {
-    this.YoutubeData()
+  componentWillMount() {
+    this.YoutubeData('여행');
+  }
+
+  setInput(input) {
+    this.setState({ input });
   }
 
   render () {
+    const { input } = this.state;
     return (
       <div>
         <Nav>
-          <SearchBar />
+          <SearchBar input={ input } setInput={this.setInput} onSearchData={this.YoutubeData}/>
         </Nav>
       </div>
     );

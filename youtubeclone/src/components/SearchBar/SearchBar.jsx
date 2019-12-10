@@ -8,8 +8,9 @@ const SearchBar = props => {
         className="search-box"
         type="search"
         placeholder=" 검색어를 입력하시오."
+        onChange={e => props.setInput(e.target.value)}
       />
-      <button className="search-icon" >
+      <button className="search-icon" onClick={() => props.onSearchData(props.input)}>
         <svg
           viewBox="0 0 24 24"
           preserveAspectRatio="xMidYMid meet"
