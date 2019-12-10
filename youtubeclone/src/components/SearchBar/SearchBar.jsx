@@ -1,10 +1,11 @@
 import React from 'react';
+import './SearchBar.css';
 
 const SearchBar = () => {
   return (
-    <div>
-      <input type="search" placeholder="검색어를 입력하시오." />
-      <button>
+    <div className="search-bar">
+      <input className="search-box" type="search" placeholder="검색어를 입력하시오." />
+      <button className="search-icon">
         <svg
           viewBox="0 0 24 24"
           preserveAspectRatio="xMidYMid meet"
