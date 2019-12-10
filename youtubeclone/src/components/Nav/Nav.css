@@ -1,16 +1,17 @@
 .navigation {
-  height: 100px;
   display: flex;
+  /* background: rgba(0, 0, 0, .2); */
+  height: 150px;
+
 }
 
 .logo {
   display: inline-block;
-  width: 200px;
-  height: 100px;
   margin: 0 50px;
+  height: 100%;
 }
 
 .logo img {
-  width: 100%;
+  width: 300px;
   height: 100%;
 }

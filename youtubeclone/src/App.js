@@ -9,7 +9,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       video: [],
-
+      query: '',
     };
 
     Object.getOwnPropertyNames(App.prototype).forEach(key => this[key] = this[key].bind(this));
@@ -17,18 +17,23 @@ class App extends React.Component {
 
 
 
-  async YoutubeData(query) {
-
+  async YoutubeData() {
     const params = {
-      key: 'AIzaSyBVkcJm7e-M4B3kiiWeG-pepm78MGRiXXA',
-      q: query,
+      key: '',
+      q: '여행',
       part: 'snippet',
+      maxResults: 10,
     }
 
     const { data } = await axios.get('https://www.googleapis.com/youtube/v3/search', { params });
     this.setState({
-      video: [...this.state, ...data.items]
-    }, console.log(data.items));
+      video: [this.state.video, ...data.items],
+      query: '여행'
+    }, console.log(this.state, data.items));
+  }
+
+  componentDidMount() {
+    this.YoutubeData()
   }
 
   render () {
