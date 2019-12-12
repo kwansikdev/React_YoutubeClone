@@ -11,7 +11,7 @@ const VideoListItems = props => {
   }
 
   return (
-    <li className="video-list" onclick={() => props.onSelectedVideo(videoData.id)}>
+    <li className="video-list" onClick={() => props.onSelectedVideo(videoData.id)}>
       <div className="img">
         <img src={videoData.thumnail} alt="video-thumnail"/>
       </div>

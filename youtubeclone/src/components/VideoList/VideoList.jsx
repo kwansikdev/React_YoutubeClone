@@ -3,12 +3,12 @@ import uuid from 'uuid';
 import VideoListItems from '../VideoList/VideoListItems';
 import './VideoList.css'
 
-const VideoList = (props) => {
+const VideoList = props => {
   const videos = props.videos.map(video =>
     <VideoListItems
       {...video}
       key={uuid.v4()}
-
+      onSelectedVideo={props.onSelectedVideo}
     />
   );
 

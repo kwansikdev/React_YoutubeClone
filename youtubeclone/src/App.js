@@ -19,6 +19,7 @@ class App extends React.Component {
       selectedVideoId: null,
       query: '',
       nextPageToken: null,
+      title: '',
     };
     this.defaultState = this.state;
     Object.getOwnPropertyNames(App.prototype).forEach(key => this[key] = this[key].bind(this));
@@ -58,7 +59,7 @@ class App extends React.Component {
     this.setState({ input });
   }
 
-  setVideId(id) {
+  setVideoId(id) {
     this.setState({selectedVideoId: id})
   }
 
@@ -74,7 +75,7 @@ class App extends React.Component {
           ? <VideoPlayer videoId={selectedVideoId}/>
           : <InfiniteScroller
               // loadMore={() => this.YoutubeData(this.state.query)}
-              // hasMore={!!this.state.nextPageToken}
+              // hasMore={!!this.state.nextPageToken && !this.state.selectedVideo}
               loader={
                 <div className="spinner">
                   <img src={spinner} alt="loading" />
@@ -83,7 +84,7 @@ class App extends React.Component {
             >
               <VideoList
                 {...this.state}
-                onSelecedVideo={this.setVideId}
+                onSelectedVideo={this.setVideoId}
               />
           </InfiniteScroller>
         }
