@@ -1,5 +1,5 @@
 .search-bar {
-  padding: 55px 0 55px 50px;
+  padding: 55px 0 55px 40px;
   width: 100%;
   align-items: center;
   text-align: left;
@@ -7,7 +7,7 @@
 
 .search-box {
   margin-right: 10px;
-  width: 80%;
+  width: 860px;
   height: 38px;
   vertical-align: middle;
   border-style: none;

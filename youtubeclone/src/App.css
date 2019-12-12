@@ -4,3 +4,12 @@
   padding: 0;
   /* border-style: none; */
 }
+
+.spinner {
+  display: inline-block;
+  margin: 10px 100px;
+}
+.spinner img {
+  width: 100px;
+  height: 100px;
+}
