@@ -3,6 +3,7 @@
   width: 100%;
   align-items: center;
   text-align: left;
+  white-space: nowrap;
 }
 
 .search-box {

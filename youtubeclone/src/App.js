@@ -35,7 +35,7 @@ class App extends React.Component {
 
     const { nextPageToken } = this.state;
     const params = {
-      key: '',
+      key: 'AIzaSyDaPqjHP8-KjgWPqSNSfVbejL5SUWXlku0',
       q: query,
       part: 'snippet',
       maxResults: 10,
@@ -72,7 +72,7 @@ class App extends React.Component {
         </Nav>
         {
           selectedVideoId
-          ? <VideoPlayer videoId={selectedVideoId}/>
+          ? <VideoPlayer {...this.state} videoId={selectedVideoId}/>
           : <InfiniteScroller
               // loadMore={() => this.YoutubeData(this.state.query)}
               // hasMore={!!this.state.nextPageToken && !this.state.selectedVideo}

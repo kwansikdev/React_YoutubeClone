@@ -11,7 +11,8 @@
 
 .img {
   display: inline-block;
-  width: 264px;
+  min-width: 264px;
+  max-width: 264px;
   height: 140px;
   text-align: center;
 }
