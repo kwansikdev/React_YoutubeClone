@@ -9,26 +9,26 @@ const VideoListItems = props => {
     discription: props.snippet.description,
     id: props.id.videoId,
     channelId: props.snippet.channelId,
-  }
+  };
 
   return (
     <li
-      className="video-list"
+      className='video-list'
       onClick={() => {
         props.onSelectedVideo(videoData.id);
-        props.getSeletedVideoInfo(videoData.channelId);
-        }}
-      >
-      <div className="img">
-        <img src={videoData.thumnail} alt="video-thumnail"/>
+        // props.getSeletedVideoInfo(videoData.channelId);
+      }}
+    >
+      <div className='img'>
+        <img src={videoData.thumnail} alt='video-thumnail' />
       </div>
-      <div className="video-info">
+      <div className='video-info'>
         <span>{videoData.title}</span>
-        <small className="">{videoData.channelTitle}</small>
-        <small className="">{videoData.discription}</small>
+        <small className=''>{videoData.channelTitle}</small>
+        <small className=''>{videoData.discription}</small>
       </div>
     </li>
-  )
-}
+  );
+};
 
 export default VideoListItems;
