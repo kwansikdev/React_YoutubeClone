@@ -9,6 +9,7 @@ const VideoList = props => {
       {...video}
       key={uuid.v4()}
       onSelectedVideo={props.onSelectedVideo}
+      getSeletedVideoInfo={props.getSeletedVideoInfo}
     />
   );
 

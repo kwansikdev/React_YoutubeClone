@@ -6,7 +6,7 @@ const VideoPlayer = props => {
     video.id.videoId === props.videoId
   );
 
-  console.log(selectedVideo)
+  console.log(props.channelInfo)
   const url = `https://www.youtube.com/embed/${props.videoId}`
 
     return (
@@ -16,6 +16,7 @@ const VideoPlayer = props => {
           <span>{selectedVideo[0].snippet.title}</span>
         </div>
         <div className="selected-video-channel">
+          <img />
           <span>{selectedVideo[0].snippet.channelTitle}</span>
         </div>
       </div>
