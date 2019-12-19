@@ -3,6 +3,8 @@ import axios from 'axios';
 import InfiniteScroller from 'react-infinite-scroller';
 import { withRouter } from 'react-router-dom';
 import qs from 'query-string';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import './App.css';
 import spinner from './components/images/spinner.gif';
@@ -10,6 +12,7 @@ import spinner from './components/images/spinner.gif';
 import Nav from './components/Nav/Nav';
 import SearchBar from './components/SearchBar/SearchBar';
 import VideoList from './components/VideoList/VideoList';
+import { updateQuery } from './actions/action';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,7 +20,7 @@ class App extends React.Component {
     this.state = {
       videos: [],
       selectedVideoId: null,
-      query: '',
+      query: this.props.query,
       nextPageToken: null,
       title: '',
       channelInfo: [],
@@ -33,7 +36,7 @@ class App extends React.Component {
       this.setState(this.defaultState);
       this.props.history.push(`/results?search_query=${query}`);
     }
-    if (this.state.query !== query) {
+    if (this.props.query !== query) {
       this.setState(this.defaultState);
       this.props.history.push(`/results?search_query=${query}`);
     }
@@ -58,13 +61,14 @@ class App extends React.Component {
     this.setState(
       {
         videos: [...this.state.videos, ...data.items],
-        query,
         nextPageToken: data.nextPageToken,
       },
       () => {
         console.log(this.state);
       },
     );
+
+    this.props.updateQuery(query);
   }
 
   // async getSeletedVideoInfo(channelId) {
@@ -99,7 +103,7 @@ class App extends React.Component {
           <SearchBar onSearchData={this.YoutubeData} />
         </Nav>
         <InfiniteScroller
-          // loadMore={() => this.YoutubeData(this.state.query)}
+          // loadMore={() => this.YoutubeData(this.props.query)}
           // hasMore={!!this.state.nextPageToken && !this.state.selectedVideo}
           loader={
             <div className='spinner'>
@@ -119,4 +123,19 @@ class App extends React.Component {
   }
 }
 
-export default withRouter(App);
+function mapStateToProps(state) {
+  return {
+    query: state.updateQuery.query,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      updateQuery,
+    },
+    dispatch,
+  );
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

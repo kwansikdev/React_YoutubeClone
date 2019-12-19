@@ -2,6 +2,8 @@ import React from 'react';
 import qs from 'query-string';
 
 import './components/VideoPlayer/VideoPlayer.css';
+import Nav from './components/Nav/Nav';
+import SearchBar from './components/SearchBar/SearchBar';
 
 const VideoPlayer = props => {
   // const selectedVideo = props.videos.filter(
@@ -17,21 +19,26 @@ const VideoPlayer = props => {
   const url = `https://www.youtube.com/embed/${_id}`;
   console.log(url);
   return (
-    <div className='video-player'>
-      <iframe
-        src={url}
-        title={_id}
-        width='1100'
-        height='619'
-        frameBorder='0'
-      ></iframe>
-      <div className='selected-video'>
-        {/* <span>{selectedVideo[0].snippet.title}</span> */}
+    <>
+      <Nav>
+        <SearchBar />
+      </Nav>
+      <div className='video-player'>
+        <iframe
+          src={url}
+          title={_id}
+          width='1100'
+          height='619'
+          frameBorder='0'
+        ></iframe>
+        <div className='selected-video'>
+          {/* <span>{selectedVideo[0].snippet.title}</span> */}
+        </div>
+        <div className='selected-video-channel'>
+          {/* <span>{selectedVideo[0].snippet.channelTitle}</span> */}
+        </div>
       </div>
-      <div className='selected-video-channel'>
-        {/* <span>{selectedVideo[0].snippet.channelTitle}</span> */}
-      </div>
-    </div>
+    </>
   );
 };
 

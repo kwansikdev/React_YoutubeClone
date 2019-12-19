@@ -1,5 +1,8 @@
 import React from 'react';
 import './SearchBar.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import updateQuery from '../../reducers';
 
 const SearchBar = props => {
   const handleEnter = search => e => {
@@ -50,4 +53,19 @@ const SearchBar = props => {
   );
 };
 
-export default SearchBar;
+function mapStateToProps(state) {
+  return {
+    query: state.updateQuery.query,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      updateQuery,
+    },
+    dispatch,
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
