@@ -22,8 +22,9 @@ const SearchBar = props => {
         className='search-box'
         type='search'
         placeholder=' 검색어를 입력하시오.'
+        defaultValue={props.query || ''}
         // onChange={e => props.setInput(e.target.value)}
-        onKeyPress={handleEnter(props.onSearchData)}
+        onKeyPress={() => handleEnter(props.onSearchData)}
       />
       <button
         className='search-icon'

@@ -31,44 +31,55 @@ class App extends React.Component {
     );
   }
 
-  async YoutubeData(query) {
-    if (!query) {
-      this.setState(this.defaultState);
-      this.props.history.push(`/results?search_query=${query}`);
-    }
+  async _YoutubeData(query) {
+    // history가 계속 쌓이는 문제가 생겼었음
+
+    // if (!query) {
+    //   this.setState(this.defaultState);
+    //   this.props.history.push(`/results?search_query=${query}`);
+    // }
+    // if (this.props.query !== query) {
+    //   this.setState(this.defaultState);
+    //   this.props.history.push(`/results?search_query=${query}`);
+    // }
+    this.props.updateQuery(query);
+
+    try {
+      const { nextPageToken } = this.state;
+      const params = {
+        // key 꼭 지우고 커밋하기!!
+        key: process.env.REACT_APP_KEY,
+        q: query,
+        part: 'snippet',
+        maxResults: 10,
+        pageToken: nextPageToken,
+      };
+
+      const { data } = await axios.get(
+        'https://www.googleapis.com/youtube/v3/search',
+        {
+          params,
+        },
+      );
+
+      this.setState(
+        {
+          videos: [...this.state.videos, ...data.items],
+          query: this.props.query,
+          nextPageToken: data.nextPageToken,
+        },
+        () => {
+          console.log(this.state);
+        },
+      );
+    } catch (e) {}
+  }
+
+  YoutubeData(query) {
     if (this.props.query !== query) {
       this.setState(this.defaultState);
-      this.props.history.push(`/results?search_query=${query}`);
     }
-
-    const { nextPageToken } = this.state;
-    const params = {
-      // key 꼭 지우고 커밋하기!!
-      key: process.env.REACT_APP_KEY,
-      q: query,
-      part: 'snippet',
-      maxResults: 10,
-      pageToken: nextPageToken,
-    };
-
-    const { data } = await axios.get(
-      'https://www.googleapis.com/youtube/v3/search',
-      {
-        params,
-      },
-    );
-
-    this.setState(
-      {
-        videos: [...this.state.videos, ...data.items],
-        nextPageToken: data.nextPageToken,
-      },
-      () => {
-        console.log(this.state);
-      },
-    );
-
-    this.props.updateQuery(query);
+    this._YoutubeData(query);
   }
 
   // async getSeletedVideoInfo(channelId) {
@@ -96,11 +107,26 @@ class App extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { props } = this;
+
+    if (props.location) {
+      const { search_query } = qs.parse(props.location.search);
+      const { search_query: prev } = qs.parse(prevProps.location.search);
+
+      if (search_query !== prev) this.YoutubeData(search_query || '');
+    }
+  }
+
   render() {
     return (
       <div>
         <Nav>
-          <SearchBar onSearchData={this.YoutubeData} />
+          <SearchBar
+            onSearchData={value =>
+              this.props.history.push(`/results?search_query=${value}`)
+            }
+          />
         </Nav>
         <InfiniteScroller
           // loadMore={() => this.YoutubeData(this.props.query)}
