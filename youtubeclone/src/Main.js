@@ -2,11 +2,13 @@ import React from 'react';
 import axios from 'axios';
 import qs from 'query-string';
 import InfiniteScroller from 'react-infinite-scroller';
+import uuid from 'uuid';
 
 import './App.css';
 
 import Nav from './components/Nav/Nav';
 import SearchBar from './components/SearchBar/SearchBar';
+import { spinner } from './components/images/spinner.gif';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -22,12 +24,17 @@ class Main extends React.Component {
       nextPageToken: null,
     };
 
+    this.defaultState = this.state;
     Object.getOwnPropertyNames(Main.prototype).forEach(
       key => (this[key] = this[key].bind(this)),
     );
   }
 
-  async getYoutubeData(query) {
+  async _getYoutubeData(query, isChanged) {
+    if (isChanged) {
+      this.setState(this.defaultState);
+    }
+
     const params = {
       key: process.env.REACT_APP_KEY,
       part: 'snippet',
@@ -50,6 +57,15 @@ class Main extends React.Component {
       },
       () => console.log(this.state),
     );
+  }
+
+  getYoutubeData(query) {
+    let isChanged;
+    if (this.props.query !== query) {
+      isChanged = true;
+      this.props.updateQuery(query);
+    }
+    this._getYoutubeData(query, isChanged);
   }
 
   componentDidMount() {
@@ -84,8 +100,19 @@ class Main extends React.Component {
             }
           />
         </Nav>
-        <InfiniteScroller>
-          <VideoList />
+        <InfiniteScroller
+          // loadMore={() => this.getYoutubeData(this.props.qeury)}
+          hasMore={!!this.state.nextPageToken}
+          loader={
+            <div key={uuid.v4()} className='loader'>
+              <img src={spinner} alt='loading' />
+            </div>
+          }
+        >
+          <VideoList
+            {...this.state}
+            onSelectedVideo={id => this.props.history.push(`watch?v=${id}`)}
+          />
         </InfiniteScroller>
       </div>
     );
@@ -99,9 +126,12 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    updateQuery,
-  });
+  return bindActionCreators(
+    {
+      updateQuery,
+    },
+    dispatch,
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
