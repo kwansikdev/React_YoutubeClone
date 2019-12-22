@@ -1,23 +1,26 @@
-import { UPDATE_QUERY, LIKE } from '../actions/action';
+import { UPDATE_QUERY, LIKECOUNT } from '../actions/action';
 
 const INITIONAL_STATE = {
   query: '',
+  data: {},
 };
 
-export default function updateQuery(state = INITIONAL_STATE, action) {
+export default function updateStore(state = INITIONAL_STATE, action) {
   switch (action.type) {
     case UPDATE_QUERY:
       return {
         query: action.query,
       };
-    case LIKE:
-      const video = state.data[action.id];
+    case LIKECOUNT:
+      const videoInfo = state.data[action.id];
+
       return {
         ...state,
         data: {
           ...state.data,
           [action.id]: {
-            ...video,
+            ...videoInfo,
+            count: videoInfo ? videoInfo.count + 1 : 1,
           },
         },
       };

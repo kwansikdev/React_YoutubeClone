@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import updateQuery from './reducer';
+import updateStore from './reducer';
 
 export default combineReducers({
-  updateQuery,
+  updateStore,
 });

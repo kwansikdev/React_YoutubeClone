@@ -1,34 +1,30 @@
 import React from 'react';
+
 import './SearchBar.css';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import updateQuery from '../../reducers';
+import { connect } from 'react-redux';
+import { updateQuery } from '../../actions/action';
 
 const SearchBar = props => {
-  const handleEnter = search => e => {
-    if (e.key === 'Enter') {
+  const handelEnter = search => e => {
+    if ((e.key = 'Enter')) {
       search(e.target.value.trim());
     }
   };
 
-  // input에 대해 참조값을 할당하기 위한 변수 설정
   let input;
 
   return (
     <div className='search-bar'>
       <input
-        // ref라는 참조값을 input에 할당한다.
         ref={ref => (input = ref)}
-        className='search-box'
-        type='search'
-        placeholder=' 검색어를 입력하시오.'
         defaultValue={props.query || ''}
-        // onChange={e => props.setInput(e.target.value)}
-        onKeyPress={() => handleEnter(props.onSearchData)}
+        className='search-box'
+        onKeyPress={handelEnter(props.onSearchVideos)}
       />
       <button
         className='search-icon'
-        onClick={() => props.onSearchData(input.value)}
+        onClick={() => props.onSearchVideos(input.value)}
       >
         <svg
           viewBox='0 0 24 24'
@@ -56,7 +52,7 @@ const SearchBar = props => {
 
 function mapStateToProps(state) {
   return {
-    query: state.updateQuery.query,
+    query: state.updateStore.query,
   };
 }
 

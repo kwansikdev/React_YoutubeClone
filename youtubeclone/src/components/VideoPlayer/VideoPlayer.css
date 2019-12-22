@@ -10,6 +10,11 @@
   border-bottom: 1px solid #DEDDDD;
 }
 
+.like-btn {
+  width: 20px;
+  height: 20px;
+}
+
 .selected-video-channel {
   margin: 20px 0;
 }
