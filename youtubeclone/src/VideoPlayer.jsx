@@ -2,11 +2,12 @@ import React from 'react';
 import qs from 'query-string';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { likeCount } from './actions/action';
 
 import './components/VideoPlayer/VideoPlayer.css';
 import Nav from './components/Nav/Nav';
 import SearchBar from './components/SearchBar/SearchBar';
+
+import { likeCount } from './actions/action';
 
 const VideoPlayer = props => {
   const { v } = qs.parse(props.location.search);
@@ -52,6 +53,9 @@ const VideoPlayer = props => {
               </g>
             </svg>
           </button>
+          {/* {props.data[videoId] && props.data[videoId].count
+            ? props.data[videoId].count
+            : 0} */}
         </div>
 
         <div className='selected-video-channel'>

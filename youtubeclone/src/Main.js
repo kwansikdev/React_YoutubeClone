@@ -31,32 +31,31 @@ class Main extends React.Component {
   }
 
   async _getYoutubeData(query, isChanged) {
-    if (isChanged) {
-      this.setState(this.defaultState);
-    }
+    try {
+      if (isChanged) {
+        this.setState(this.defaultState);
+      }
 
-    const params = {
-      key: process.env.REACT_APP_KEY,
-      part: 'snippet',
-      q: query,
-      maxResults: 10,
-      pageToken: this.state.nextPageToken,
-    };
+      const params = {
+        key: process.env.REACT_APP_KEY,
+        part: 'snippet',
+        q: query,
+        maxResults: 10,
+        pageToken: this.state.nextPageToken,
+      };
 
-    const { data } = await axios.get(
-      'https://www.googleapis.com/youtube/v3/search',
-      {
-        params,
-      },
-    );
+      const { data } = await axios.get(
+        'https://www.googleapis.com/youtube/v3/search',
+        {
+          params,
+        },
+      );
 
-    this.setState(
-      {
+      this.setState({
         videos: [...this.state.videos, ...data.items],
         nextPageToken: data.nextPageToken,
-      },
-      () => console.log(this.state),
-    );
+      });
+    } catch (e) {}
   }
 
   getYoutubeData(query) {
