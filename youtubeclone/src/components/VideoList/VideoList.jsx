@@ -9,6 +9,7 @@ const VideoList = props => {
       {...video}
       key={uuid.v4()}
       onSelectedVideo={props.onSelectedVideo}
+      // onSelectedChannel={props.onSelectedChannel}
     />
   ));
   return <ul className='video-lists'>{video}</ul>;

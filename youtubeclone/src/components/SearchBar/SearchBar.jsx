@@ -20,6 +20,7 @@ const SearchBar = props => {
         ref={ref => (input = ref)}
         defaultValue={props.query || ''}
         className='search-box'
+        // onChange={e => props.onSearchVideos(e.target.value)}
         onKeyPress={handelEnter(props.onSearchVideos)}
       />
       <button

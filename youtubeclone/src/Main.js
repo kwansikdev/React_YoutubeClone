@@ -3,17 +3,19 @@ import axios from 'axios';
 import qs from 'query-string';
 import InfiniteScroller from 'react-infinite-scroller';
 import uuid from 'uuid';
+// import { debounce } from 'lodash';
 
 import './App.css';
 
 import Nav from './components/Nav/Nav';
 import SearchBar from './components/SearchBar/SearchBar';
+import VideoList from './components/VideoList/VideoList';
+
 import { spinner } from './components/images/spinner.gif';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateQuery } from './actions/action';
-import VideoList from './components/VideoList/VideoList';
 
 class Main extends React.Component {
   constructor(props) {
@@ -30,11 +32,12 @@ class Main extends React.Component {
     );
   }
 
-  async _getYoutubeData(query, isChanged) {
+  _getYoutubeData = async (query, isChanged) => {
     try {
       if (isChanged) {
         this.setState(this.defaultState);
       }
+      if (!query) return;
 
       const params = {
         key: process.env.REACT_APP_KEY,
@@ -56,7 +59,7 @@ class Main extends React.Component {
         nextPageToken: data.nextPageToken,
       });
     } catch (e) {}
-  }
+  };
 
   getYoutubeData(query) {
     let isChanged;
@@ -66,6 +69,23 @@ class Main extends React.Component {
     }
     this._getYoutubeData(query, isChanged);
   }
+
+  // async getYoutubeChannelData(channelId) {
+  //   const params = {
+  //     key: process.env.REACT_APP_KEY,
+  //     part: 'snippet',
+  //     id: channelId,
+  //   };
+
+  //   const { data } = await axios.get(
+  //     'https://www.googleapis.com/youtube/v3/channels',
+  //     {
+  //       params,
+  //     },
+  //   );
+
+  //   console.log(data.items[0]);
+  // }
 
   componentDidMount() {
     // this.getYoutubeData('강지');
@@ -111,6 +131,9 @@ class Main extends React.Component {
           <VideoList
             {...this.state}
             onSelectedVideo={id => this.props.history.push(`watch?v=${id}`)}
+            // onSelectedChannel={channelId =>
+            //   this.getYoutubeChannelData(channelId)
+            // }
           />
         </InfiniteScroller>
       </div>
@@ -121,6 +144,7 @@ class Main extends React.Component {
 function mapStateToProps(state) {
   return {
     query: state.updateStore.query,
+    data: state.updateStore.data,
   };
 }
 
