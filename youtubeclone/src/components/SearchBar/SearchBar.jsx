@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import './SearchBar.css';
 import { bindActionCreators } from 'redux';
@@ -12,20 +12,21 @@ const SearchBar = props => {
     }
   };
 
-  let input;
+  const input = useRef(null);
 
   return (
     <div className='search-bar'>
       <input
-        ref={ref => (input = ref)}
-        defaultValue={props.query || ''}
+        // ref={ref => (input = ref)}
+        ref={input}
+        Value={props.query || ''}
         className='search-box'
         // onChange={e => props.onSearchVideos(e.target.value)}
         onKeyPress={handelEnter(props.onSearchVideos)}
       />
       <button
         className='search-icon'
-        onClick={() => props.onSearchVideos(input.value)}
+        onClick={() => props.onSearchVideos(input.current.value)}
       >
         <svg
           viewBox='0 0 24 24'

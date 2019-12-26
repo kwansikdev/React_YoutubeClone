@@ -115,8 +115,9 @@ const VideoPlayer = props => {
           width='1100'
           height='619'
           frameBorder='0'
+          allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+          allowfullscreen
         />
-
         <div className='selected-video'>
           <div className='video-title'>
             <p>{videoData.title}</p>
@@ -130,7 +131,7 @@ const VideoPlayer = props => {
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 회
               </small>
-              &#183;
+              &#183;&nbsp;
               <small>
                 {videoData.publishedAt
                   .slice(0, 10)
@@ -165,7 +166,7 @@ const VideoPlayer = props => {
                   </svg>
                   <span>
                     {props.data[videoId] && props.data[videoId].likeCount
-                      ? props.data[videoId].likeCount + videoData.likeCount * 1
+                      ? props.data[videoId].likeCount + +videoData.likeCount
                       : videoData.likeCount}
                   </span>
                 </button>
@@ -197,7 +198,7 @@ const VideoPlayer = props => {
                   <span>
                     {props.data[videoId] && props.data[videoId].dislikeCount
                       ? props.data[videoId].dislikeCount +
-                        videoData.dislikeCount * 1
+                        +videoData.dislikeCount
                       : videoData.dislikeCount}
                   </span>
                 </button>
