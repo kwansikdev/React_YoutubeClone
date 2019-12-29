@@ -10,7 +10,8 @@
   border-bottom: 1px solid #dedddd;
 }
 
-.video-title {}
+.video-title {
+}
 
 .video-title p {
   font-size: 22px;
@@ -50,6 +51,7 @@
   vertical-align: middle;
   font-size: 18px;
   /* line-height: 1; */
+  outline: none;
 }
 
 .selected-video-channel {

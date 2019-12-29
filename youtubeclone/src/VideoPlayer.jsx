@@ -36,7 +36,6 @@ const VideoPlayer = props => {
   const url = `https://youtube.com/embed/${videoId}`;
 
   const getYoutubeVideoData = async videoId => {
-    console.log('asdas');
     try {
       const params = {
         key: process.env.REACT_APP_KEY,
@@ -65,28 +64,29 @@ const VideoPlayer = props => {
   };
 
   const getYoutubeChannelData = async channelId => {
-    console.log(videoData.channelId);
-    if (!videoData.channelId) return;
+    try {
+      if (!videoData.channelId) return;
 
-    const params = {
-      key: process.env.REACT_APP_KEY,
-      part: 'snippet, statistics',
-      id: channelId,
-    };
+      const params = {
+        key: process.env.REACT_APP_KEY,
+        part: 'snippet, statistics',
+        id: channelId,
+      };
 
-    const { data } = await axios.get(
-      'https://www.googleapis.com/youtube/v3/channels',
-      {
-        params,
-      },
-    );
+      const { data } = await axios.get(
+        'https://www.googleapis.com/youtube/v3/channels',
+        {
+          params,
+        },
+      );
 
-    setChannelData({
-      title: data.items[0].snippet.title,
-      description: data.items[0].snippet.description,
-      thumbnails: data.items[0].snippet.thumbnails.high.url,
-      subscriberCount: data.items[0].statistics.subscriberCount,
-    });
+      setChannelData({
+        title: data.items[0].snippet.title,
+        description: data.items[0].snippet.description,
+        thumbnails: data.items[0].snippet.thumbnails.high.url,
+        subscriberCount: data.items[0].statistics.subscriberCount,
+      });
+    } catch (e) {}
   };
 
   useEffect(() => {
@@ -125,7 +125,7 @@ const VideoPlayer = props => {
           <div className='info'>
             <div>
               <small>
-                조회수{' '}
+                조회수&nbsp;
                 {videoData.viewCount
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
