@@ -7,43 +7,46 @@ import { updateQuery } from '../../actions/action';
 
 const SearchBar = props => {
   const handelEnter = search => e => {
+    console.log('lalala', e.target.name);
     if ((e.key = 'Enter')) {
       search(e.target.value.trim());
     }
   };
 
+  // ref
   const input = useRef(null);
 
   return (
-    <div className='search-bar'>
+    <div className="search-bar">
       <input
         // ref={ref => (input = ref)}
         ref={input}
-        Value={props.query || ''}
-        className='search-box'
+        defaultValue={props.query || ''}
+        className="search-box"
+        // 입력하는 즉시 동시에 url의 search_query값을 바로 변경
         // onChange={e => props.onSearchVideos(e.target.value)}
         onKeyPress={handelEnter(props.onSearchVideos)}
       />
       <button
-        className='search-icon'
+        className="search-icon"
         onClick={() => props.onSearchVideos(input.current.value)}
       >
         <svg
-          viewBox='0 0 24 24'
-          preserveAspectRatio='xMidYMid meet'
-          focusable='false'
-          className='style-scope yt-icon'
+          viewBox="0 0 24 24"
+          preserveAspectRatio="xMidYMid meet"
+          focusable="false"
+          className="style-scope yt-icon"
           style={{
             pointerEvents: 'none',
             display: 'block',
             width: '100%',
-            height: '100%',
+            height: '100%'
           }}
         >
-          <g className='style-scope yt-icon'>
+          <g className="style-scope yt-icon">
             <path
-              d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'
-              className='style-scope yt-icon'
+              d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+              className="style-scope yt-icon"
             />
           </g>
         </svg>
@@ -54,16 +57,16 @@ const SearchBar = props => {
 
 function mapStateToProps(state) {
   return {
-    query: state.updateStore.query,
+    query: state.updateStore.query
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      updateQuery,
+      updateQuery
     },
-    dispatch,
+    dispatch
   );
 }
 

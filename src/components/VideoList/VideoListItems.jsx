@@ -8,21 +8,20 @@ const VideoListItems = props => {
     thumbnail: props.snippet.thumbnails.medium.url,
     channelTitle: props.snippet.channelTitle,
     videoId: props.id.videoId,
-    channelId: props.snippet.channelId,
+    channelId: props.snippet.channelId
   };
 
   return (
     <li
-      className='video-list'
+      className="video-list"
       onClick={() => {
         props.onSelectedVideo(videoInfo.videoId);
-        // props.onSelectedChannel(videoInfo.channelId);
       }}
     >
-      <div className='img'>
-        <img src={videoInfo.thumbnail} alt='video-thumbnails' />
+      <div className="img">
+        <img src={videoInfo.thumbnail} alt="video-thumbnails" />
       </div>
-      <div className='video-info'>
+      <div className="video-info">
         <span>{videoInfo.channelTitle}</span>
         <small>{videoInfo.description}</small>
       </div>
